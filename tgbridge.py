@@ -1,7 +1,7 @@
 import json
 import logging
 
-from telegram import ParseMode, InlineKeyboardButton, InlineKeyboardMarkup
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Updater, MessageHandler, Filters, CallbackQueryHandler
 
 from br_vk import VkBridge
@@ -26,7 +26,7 @@ class TgBridge:
 			rm = InlineKeyboardMarkup(
 				[[InlineKeyboardButton("Set this chat active", callback_data='set_active:' + name + ':' + str(chat_id))]])
 
-		self.tg.send_message(chat_id=self.cfg_tg['master'], text=msg, parse_mode=ParseMode.MARKDOWN, reply_markup=rm)
+		self.tg.send_message(chat_id=self.cfg_tg['master'], text=msg, parse_mode='MARKDOWN', reply_markup=rm)
 
 	def tg_button(self, bot, update):
 		query = update.callback_query
