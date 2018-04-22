@@ -46,8 +46,6 @@ class VkBridge(Bridge):
 						id = upd[3]
 						title = 'PEER ' + str(id)
 						message = upd[5]
-						print(upd)
-						print(id)
 
 						if id < 0:  # GROUP
 							group = self.api.groups.getById(group_id=abs(id))[0]
@@ -63,7 +61,7 @@ class VkBridge(Bridge):
 							user = self.api.users.get(user_id=id)[0]
 							title = "%s %s (ID:%i)" % (user['first_name'], user['last_name'], user['id'])
 
-						self.tg.push(name=self.name, title=title, text=message)
+						self.tg.push(name=self.name, title=title, chat_id=id, text=message)
 		except VkAPIError as e:
 			print(e.request_params)
 			self.log.error('Poll error: ' + e.message)
