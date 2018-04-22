@@ -40,7 +40,7 @@ class VkBridge(Bridge):
 							if upd[2] & number:
 								flags.append(number)
 
-						if 1 in flags:
+						if 2 in flags:
 							continue
 
 						id = upd[3]
