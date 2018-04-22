@@ -70,7 +70,7 @@ class TgBridge:
 		# updater.dispatcher.add_handler(MessageHandler(Filters.photo, self.tg_photo))
 		updater.dispatcher.add_handler(CallbackQueryHandler(self.tg_button))
 
-		updater.start_polling(timeout=self.cfg_tg['pool_timeout'], network_delay=self.cfg_tg['network_delay'])
+		updater.start_polling(timeout=self.cfg_tg['pool_timeout'], read_latency=self.cfg_tg['read_latency'])
 		self.log.info('Telegram ready.')
 		updater.idle()
 

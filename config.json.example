@@ -7,7 +7,7 @@
 		"token": "1234:asdfgh",
 		"master": 12345678,
 		"pool_timeout": 10,
-		"network_delay": 5
+		"read_latency": 5
 	},
 	"vk": {
 		"token": "asdfghj"
