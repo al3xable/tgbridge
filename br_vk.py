@@ -89,9 +89,9 @@ class VkBridge(Bridge):
                                         self.tg.push(name=self.name, title=title, chat_id=id, text="<DOCUMENT>",
                                                      document=at['doc']['url'])
                                     elif at['type'] == 'audio':
-                                        self.tg.push(name=self.name, title=title, chat_id=id, text="<AUDIO>",
-                                                     audio=at['audio']['url'], audio_title="%s - %s" % (
-                                                at['audio']['artist'], at['audio']['title']))
+                                        title = "%s - %s" % (at['audio']['artist'], at['audio']['title'])
+                                        self.tg.push(name=self.name, title=title, chat_id=id, text="<AUDIO> " + title,
+                                                     audio=at['audio']['url'], audio_title=title)
                                     else:
                                         print(at)
                                         self.tg.push(name=self.name, title=title, chat_id=id,
