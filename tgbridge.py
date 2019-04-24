@@ -1,7 +1,7 @@
 import json
 import logging
 
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, InputMediaPhoto
 from telegram.ext import Updater, MessageHandler, Filters, CallbackQueryHandler
 
 from br_vk import VkBridge
@@ -16,7 +16,7 @@ class TgBridge:
 	tg = None
 	vk = None
 
-	def push(self, name, title, chat_id, text):
+	def push(self, name, title, chat_id, text=None, photo=None):
 		self.log.info('[' + name + '] ' + title + ': ' + text)
 		msg = '*%s> %s:*\n%s' % (name.upper(), title, text)
 
@@ -24,9 +24,20 @@ class TgBridge:
 			rm = None
 		else:
 			rm = InlineKeyboardMarkup(
-				[[InlineKeyboardButton("Set this chat active", callback_data='set_active:' + name + ':' + str(chat_id))]])
+				[[InlineKeyboardButton("Set this chat active",
+									   callback_data='set_active:' + name + ':' + str(chat_id))]])
 
-		self.tg.send_message(chat_id=self.cfg_tg['master'], text=msg, parse_mode='MARKDOWN', reply_markup=rm)
+		# if len(photos) > 0:
+		#	media = []
+		#	for photo in photos:
+		#		media.append(InputMediaPhoto(media=photo))
+		#	self.tg.send_media_group(chat_id=self.cfg_tg['master'], text=msg, parse_mode='MARKDOWN', reply_markup=rm, media=media)
+		# else:
+
+		if photo:
+			self.tg.send_photo(chat_id=self.cfg_tg['master'], caption=msg, parse_mode='MARKDOWN', reply_markup=rm, photo=photo)
+		else:
+			self.tg.send_message(chat_id=self.cfg_tg['master'], text=msg, parse_mode='MARKDOWN', reply_markup=rm)
 
 	def tg_button(self, bot, update):
 		query = update.callback_query
