@@ -18,14 +18,17 @@ class TgBridge:
 
     def push(self, name, title, chat_id, text=None, photo=None, document=None, audio=None, audio_title=None):
         self.log.info('[' + name + '] ' + title + ': ' + text)
-        msg = '*%s> %s:*\n%s' % (name.upper(), title, text)
 
-        if self.active and self.active[0] == name and self.active[1] == str(chat_id):
-            rm = None
-        else:
-            rm = InlineKeyboardMarkup(
-                [[InlineKeyboardButton("Set this chat active",
-                                       callback_data='set_active:' + name + ':' + str(chat_id))]])
+        is_active = self.active and self.active[0] == name and self.active[1] == str(chat_id)
+        act = ''
+        if is_active:
+            act = '|CA'
+        msg = '*[%s%s] %s:*\n%s' % (name.upper(), act, title, text)
+
+        rm = InlineKeyboardMarkup([[
+            InlineKeyboardButton("Set this chat active", callback_data='set_active:' + name + ':' + str(chat_id)),
+            InlineKeyboardButton("Open chat", url="https://vk.com/im?sel=" + str(chat_id))
+        ]])
 
         # if len(photos) > 0:
         #	media = []
